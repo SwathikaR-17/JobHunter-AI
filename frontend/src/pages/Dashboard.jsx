@@ -1,113 +1,73 @@
 function Dashboard({ profile, jobs, analyzeJobs }) {
-  const topMatch =
-    jobs.length > 0
-      ? jobs[0].match_percentage
-      : 0;
+  const topJob = jobs.length > 0 ? jobs[0] : null;
 
-  const skillGapCount =
-    jobs.length > 0
-      ? new Set(
-          jobs.flatMap(
-            (job) => job.missing_skills || []
-          )
-        ).size
-      : 0;
-
-  const topJobs = jobs;
+  const analyzed = jobs.length > 0;
 
   return (
     <main className="dashboard-page">
 
-      {/* HERO */}
-      <section className="dashboard-hero">
+      {/* =========================
+          HERO
+      ========================== */}
 
-        <div>
+      <section className="dashboard-hero premium-hero">
+
+        <div className="hero-content">
+
           <p className="eyebrow">
-            YOUR CAREER COMMAND CENTER
+            YOUR AI CAREER COMMAND CENTER
           </p>
 
           <h1>
-            Welcome back,{" "}
-            {profile.name.split(" ")[0]} 👋
+            Your career,
+            <br />
+            <span>powered by AI.</span>
           </h1>
 
           <p className="hero-description">
-            Your AI agents are working together to
-            find opportunities that fit you best.
+            Discover opportunities, understand your fit,
+            identify skill gaps and prepare for your next
+            career move — all in one intelligent workspace.
           </p>
-        </div>
 
-        <button
-          className="analyze-button"
-          onClick={analyzeJobs}
-        >
-          ✦ Analyze Jobs
-        </button>
-
-      </section>
-
-
-      {/* STATS */}
-      <section className="dashboard-stats">
-
-        <div className="dashboard-stat-card">
-
-          <div className="stat-icon">
-            ◈
-          </div>
-
-          <div>
-            <p>JOBS ANALYZED</p>
-
-            <h2>
-              {jobs.length}
-            </h2>
-
-            <span>
-              Opportunities in your search
-            </span>
+          <div className="hero-status">
+            <span className="status-dot"></span>
+            <span>5 AI agents working together</span>
           </div>
 
         </div>
 
 
-        <div className="dashboard-stat-card">
+        {/* AI NETWORK */}
 
-          <div className="stat-icon">
-            ◎
+        <div className="ai-network">
+
+          <div className="network-orbit orbit-one"></div>
+          <div className="network-orbit orbit-two"></div>
+
+          <div className="network-core">
+            <span>✦</span>
+            <strong>AI</strong>
           </div>
 
-          <div>
-            <p>TOP MATCH</p>
-
-            <h2>
-              {topMatch}%
-            </h2>
-
-            <span>
-              Best current opportunity
-            </span>
+          <div className="network-node node-top">
+            <span>◈</span>
+            <small>JOBS</small>
           </div>
 
-        </div>
-
-
-        <div className="dashboard-stat-card">
-
-          <div className="stat-icon">
-            ✦
+          <div className="network-node node-right">
+            <span>◎</span>
+            <small>MATCH</small>
           </div>
 
-          <div>
-            <p>SKILL GAPS</p>
+          <div className="network-node node-bottom">
+            <span>✦</span>
+            <small>SKILLS</small>
+          </div>
 
-            <h2>
-              {skillGapCount}
-            </h2>
-
-            <span>
-              Skills worth improving
-            </span>
+          <div className="network-node node-left">
+            <span>↗</span>
+            <small>APPLY</small>
           </div>
 
         </div>
@@ -115,102 +75,262 @@ function Dashboard({ profile, jobs, analyzeJobs }) {
       </section>
 
 
-      {/* JOBS SECTION */}
-      <section className="dashboard-section">
+      {/* =========================
+          CAREER PULSE
+      ========================== */}
 
-        <div className="section-heading">
+      <section className="dashboard-section career-pulse-section">
+
+        <div className="dashboard-section-title">
 
           <div>
             <p className="section-eyebrow">
-              AI RECOMMENDATIONS
+              CAREER PULSE
             </p>
 
             <h2>
-              Recommended for you
+              Your workspace is ready
             </h2>
 
             <p>
-              Opportunities ranked using your skills,
-              projects and experience.
+              A quick look at the current state of your
+              career intelligence system.
             </p>
           </div>
-
-          <button
-            className="view-all-button"
-            onClick={analyzeJobs}
-          >
-            Refresh matches ↻
-          </button>
 
         </div>
 
 
-        {/* EMPTY STATE */}
-        {jobs.length === 0 && (
+        <div className="career-pulse">
 
-          <div className="empty-jobs">
+          <div className="pulse-item">
+            <div className="pulse-icon">◉</div>
 
-            <div className="empty-icon">
-              ✦
+            <div>
+              <span>PROFILE</span>
+              <strong>Ready</strong>
             </div>
 
-            <h3>
-              Your AI agents are ready
-            </h3>
+            <div className="pulse-check">✓</div>
+          </div>
 
-            <p>
-              Run an analysis to discover jobs
-              matched to your profile.
+
+          <div className="pulse-line"></div>
+
+
+          <div className="pulse-item">
+            <div className="pulse-icon">◈</div>
+
+            <div>
+              <span>JOB SEARCH</span>
+              <strong>
+                {analyzed ? "Active" : "Ready"}
+              </strong>
+            </div>
+
+            <div className="pulse-check">
+              {analyzed ? "✓" : "○"}
+            </div>
+          </div>
+
+
+          <div className="pulse-line"></div>
+
+
+          <div className="pulse-item">
+            <div className="pulse-icon">◎</div>
+
+            <div>
+              <span>MATCHING</span>
+              <strong>
+                {analyzed ? "Complete" : "Waiting"}
+              </strong>
+            </div>
+
+            <div className="pulse-check">
+              {analyzed ? "✓" : "○"}
+            </div>
+          </div>
+
+
+          <div className="pulse-line"></div>
+
+
+          <div className="pulse-item">
+            <div className="pulse-icon">✦</div>
+
+            <div>
+              <span>SKILL INTELLIGENCE</span>
+              <strong>
+                {analyzed ? "Ready" : "Waiting"}
+              </strong>
+            </div>
+
+            <div className="pulse-check">
+              {analyzed ? "✓" : "○"}
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      {/* =========================
+          NEXT BEST MOVE
+      ========================== */}
+
+      <section className="dashboard-section">
+
+        <div className="dashboard-section-title">
+
+          <div>
+            <p className="section-eyebrow">
+              AI RECOMMENDATION
             </p>
 
-            <button
-              className="analyze-button"
-              onClick={analyzeJobs}
-            >
-              Analyze my opportunities
-            </button>
+            <h2>
+              Your next best move
+            </h2>
+
+            <p>
+              JobHunter AI recommends what deserves
+              your attention next.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div className="next-action-card premium-action-card">
+
+          <div className="next-action-glow"></div>
+
+          <div className="next-action-icon">
+            ✦
+          </div>
+
+
+          <div className="next-action-content">
+
+            {!analyzed ? (
+
+              <>
+                <span className="analysis-label">
+                  START YOUR SEARCH
+                </span>
+
+                <h2>
+                  Analyze your opportunities
+                </h2>
+
+                <p>
+                  Let your AI agents analyze the available
+                  opportunities against your profile and
+                  identify where you fit best.
+                </p>
+
+                <button
+                  className="analyze-button"
+                  onClick={analyzeJobs}
+                >
+                  Analyze Jobs →
+                </button>
+              </>
+
+            ) : (
+
+              <>
+                <span className="analysis-label">
+                  SEARCH READY
+                </span>
+
+                <h2>
+                  Your opportunities are ready to explore
+                </h2>
+
+                <p>
+                  Your AI agents have analyzed the current
+                  opportunities. Start with your strongest
+                  match and explore the detailed analysis.
+                </p>
+              </>
+
+            )}
 
           </div>
 
-        )}
+        </div>
+
+      </section>
 
 
-        {/* JOB CARDS */}
-        <div className="dashboard-jobs">
+      {/* =========================
+          TOP OPPORTUNITY
+      ========================== */}
 
-          {topJobs.map((job, index) => (
+      {topJob && (
 
-            <div
-              className="dashboard-job-card"
-              key={job.job_id}
-            >
+        <section className="dashboard-section">
 
-              <div className="job-rank">
-                #{index + 1}
-              </div>
+          <div className="dashboard-section-title">
 
+            <div>
+              <p className="section-eyebrow">
+                TOP OPPORTUNITY
+              </p>
 
-              <div className="dashboard-job-main">
+              <h2>
+                Worth your attention
+              </h2>
 
-                <div className="dashboard-job-header">
+              <p>
+                Your strongest opportunity from the
+                current AI analysis.
+              </p>
+            </div>
 
-                  <div>
-
-                    <p className="job-company">
-                      {job.company}
-                    </p>
-
-                    <h3>
-                      {job.title}
-                    </h3>
-
-                  </div>
+          </div>
 
 
-                  <div className="match-score">
+          <div className="dashboard-top-job premium-job-card">
+
+            <div className="top-job-rank">
+              #1
+            </div>
+
+
+            <div className="top-job-content">
+
+              <div className="top-job-header">
+
+                <div>
+
+                  <p className="job-company">
+                    {topJob.company}
+                  </p>
+
+                  <h3>
+                    {topJob.title}
+                  </h3>
+
+                  <p className="job-meta">
+                    📍{" "}
+                    {topJob.location ||
+                      "Location not specified"}
+                  </p>
+
+                </div>
+
+
+                {/* MATCH RING */}
+
+                <div className="match-ring">
+
+                  <div className="match-ring-inner">
 
                     <strong>
-                      {job.match_percentage}%
+                      {topJob.match_percentage}%
                     </strong>
 
                     <span>
@@ -221,162 +341,294 @@ function Dashboard({ profile, jobs, analyzeJobs }) {
 
                 </div>
 
+              </div>
 
-                {/* PROGRESS */}
-                <div className="match-progress">
 
-                  <div
-                    className="match-progress-fill"
-                    style={{
-                      width: `${Math.min(
-                        job.match_percentage,
-                        100
-                      )}%`,
-                    }}
-                  />
+              <div className="top-job-divider"></div>
 
+
+              <div className="top-job-details">
+
+                <div>
+                  <span>SKILL FIT</span>
+
+                  <strong>
+                    {topJob.skill_fit || 0}%
+                  </strong>
                 </div>
 
 
-                {/* SKILLS */}
-                <div className="job-skills">
+                <div>
+                  <span>EXPERIENCE FIT</span>
 
-                  {(job.exact_matches || [])
-                    .slice(0, 3)
-                    .map((skill, skillIndex) => (
-
-                      <span
-                        className="skill-tag matched"
-                        key={skillIndex}
-                      >
-                        ✓ {skill}
-                      </span>
-
-                    ))}
-
-
-                  {(job.missing_skills || [])
-                    .slice(0, 3)
-                    .map((skill, skillIndex) => (
-
-                      <span
-                        className="skill-tag missing"
-                        key={skillIndex}
-                      >
-                        + {skill}
-                      </span>
-
-                    ))}
-
+                  <strong>
+                    {topJob.experience_fit || 0}%
+                  </strong>
                 </div>
 
 
-                {/* FOOTER */}
-                <div className="dashboard-job-footer">
+                <div>
+                  <span>PROJECT FIT</span>
 
-                  <span>
-                    Skill fit:{" "}
-                    <strong>
-                      {job.skill_fit}%
-                    </strong>
-                  </span>
-
-                  <button className="job-details-button">
-                    View analysis →
-                  </button>
-
+                  <strong>
+                    {topJob.project_fit || 0}%
+                  </strong>
                 </div>
+
+              </div>
+
+
+              <div className="top-job-skills">
+
+                {(topJob.exact_matches || []).length > 0 && (
+
+                  <div>
+
+                    <span className="top-job-label">
+                      YOUR MATCHING SKILLS
+                    </span>
+
+                    <div className="job-skills">
+
+                      {(topJob.exact_matches || [])
+                        .slice(0, 4)
+                        .map((skill, index) => (
+
+                          <span
+                            className="skill-tag matched"
+                            key={index}
+                          >
+                            ✓ {skill}
+                          </span>
+
+                        ))}
+
+                    </div>
+
+                  </div>
+
+                )}
 
               </div>
 
             </div>
 
-          ))}
+          </div>
+
+        </section>
+
+      )}
+
+
+      {/* =========================
+          HOW THE AI WORKS
+      ========================== */}
+
+      <section className="dashboard-section workflow-section">
+
+        <div className="dashboard-section-title">
+
+          <div>
+            <p className="section-eyebrow">
+              HOW JOBHUNTER AI WORKS
+            </p>
+
+            <h2>
+              One system. Multiple specialized agents.
+            </h2>
+
+            <p>
+              Your profile flows through a coordinated
+              AI pipeline to turn a resume into actionable
+              career decisions.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div className="agent-workflow">
+
+          <div className="workflow-step">
+
+            <div className="workflow-number">
+              01
+            </div>
+
+            <div className="workflow-icon">
+              ▤
+            </div>
+
+            <h3>
+              Your Resume
+            </h3>
+
+            <p>
+              Your career profile becomes the foundation
+              for the system.
+            </p>
+
+          </div>
+
+
+          <div className="workflow-connector">
+            →
+          </div>
+
+
+          <div className="workflow-step">
+
+            <div className="workflow-number">
+              02
+            </div>
+
+            <div className="workflow-icon">
+              ⌕
+            </div>
+
+            <h3>
+              Discovery
+            </h3>
+
+            <p>
+              Finds opportunities relevant to your goals.
+            </p>
+
+          </div>
+
+
+          <div className="workflow-connector">
+            →
+          </div>
+
+
+          <div className="workflow-step">
+
+            <div className="workflow-number">
+              03
+            </div>
+
+            <div className="workflow-icon">
+              ◈
+            </div>
+
+            <h3>
+              Intelligence
+            </h3>
+
+            <p>
+              Understands requirements and job context.
+            </p>
+
+          </div>
+
+
+          <div className="workflow-connector">
+            →
+          </div>
+
+
+          <div className="workflow-step">
+
+            <div className="workflow-number">
+              04
+            </div>
+
+            <div className="workflow-icon">
+              ◎
+            </div>
+
+            <h3>
+              Matching
+            </h3>
+
+            <p>
+              Measures how well each opportunity fits you.
+            </p>
+
+          </div>
+
+
+          <div className="workflow-connector">
+            →
+          </div>
+
+
+          <div className="workflow-step">
+
+            <div className="workflow-number">
+              05
+            </div>
+
+            <div className="workflow-icon">
+              ✦
+            </div>
+
+            <h3>
+              Skill Gaps
+            </h3>
+
+            <p>
+              Identifies the skills that matter most.
+            </p>
+
+          </div>
+
+
+          <div className="workflow-connector">
+            →
+          </div>
+
+
+          <div className="workflow-step">
+
+            <div className="workflow-number">
+              06
+            </div>
+
+            <div className="workflow-icon">
+              ↗
+            </div>
+
+            <h3>
+              Application Prep
+            </h3>
+
+            <p>
+              Helps turn insights into action.
+            </p>
+
+          </div>
 
         </div>
 
       </section>
 
 
-      {/* AI AGENTS */}
-      <section className="dashboard-section">
+      {/* =========================
+          BRAND FOOTER
+      ========================== */}
 
-        <div className="section-heading">
+      <section className="dashboard-brand-bar">
 
-          <div>
-            <p className="section-eyebrow">
-              YOUR AI SYSTEM
-            </p>
+        <div className="brand-decoration">
+          ✦
+        </div>
 
-            <h2>
-              Career agents
-            </h2>
+        <div>
 
-            <p>
-              Multiple specialized agents work together
-              to improve your job search.
-            </p>
-          </div>
+          <h2>
+            JOBHUNTER <span>AI</span>
+          </h2>
+
+          <p>
+            Discover. Match. Improve. Apply.
+          </p>
 
         </div>
 
-
-        <div className="agent-grid">
-
-          <div className="agent-card">
-            <span>01</span>
-            <div>⌕</div>
-            <h3>Job Discovery</h3>
-            <p>
-              Finds relevant opportunities from
-              your available job sources.
-            </p>
-          </div>
-
-
-          <div className="agent-card">
-            <span>02</span>
-            <div>◈</div>
-            <h3>Job Intelligence</h3>
-            <p>
-              Understands job requirements,
-              skills and experience.
-            </p>
-          </div>
-
-
-          <div className="agent-card">
-            <span>03</span>
-            <div>◎</div>
-            <h3>Matching Agent</h3>
-            <p>
-              Compares your profile against
-              each opportunity.
-            </p>
-          </div>
-
-
-          <div className="agent-card">
-            <span>04</span>
-            <div>✦</div>
-            <h3>Skill Gap Agent</h3>
-            <p>
-              Identifies skills that could
-              improve your career opportunities.
-            </p>
-          </div>
-
-
-          <div className="agent-card">
-            <span>05</span>
-            <div>↗</div>
-            <h3>Application Prep</h3>
-            <p>
-              Prepares useful keywords and
-              interview topics for applications.
-            </p>
-          </div>
-
+        <div className="brand-decoration">
+          ✦
         </div>
 
       </section>

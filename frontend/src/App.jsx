@@ -10,6 +10,7 @@ import Applications from "./pages/Applications";
 import Resume from "./pages/Resume";
 import Profile from "./pages/Profile";
 import Insights from "./pages/Insights";
+import JobAnalysis from "./pages/JobAnalysis";
 
 import "./App.css";
 
@@ -18,6 +19,7 @@ function App() {
   const [jobs, setJobs] = useState([]);
   const [skillGaps, setSkillGaps] = useState([]);
   const [activePage, setActivePage] = useState("dashboard");
+  const [selectedJob, setSelectedJob] = useState(null);
 
   // Load profile
   useEffect(() => {
@@ -52,6 +54,11 @@ function App() {
     }
   };
 
+  const openJobAnalysis = (job) => {
+  setSelectedJob(job);
+  setActivePage("job-analysis");
+  };
+
   // Loading state
   if (!profile) {
     return (
@@ -78,6 +85,13 @@ function App() {
         {/* PAGE CONTENT */}
         <main className="page-content">
 
+          {activePage === "job-analysis" && (
+            <JobAnalysis
+              job={selectedJob}
+              goBack={() => setActivePage("jobs")}
+            />
+          )}
+
           {/* DASHBOARD */}
           {activePage === "dashboard" && (
             <Dashboard
@@ -89,7 +103,10 @@ function App() {
 
           {/* JOBS */}
           {activePage === "jobs" && (
-            <Jobs jobs={jobs} />
+            <Jobs
+              jobs={jobs}
+              openJobAnalysis={openJobAnalysis}
+            />
           )}
 
           {/* MY MATCHES */}
@@ -109,7 +126,10 @@ function App() {
 
           {/* RESUME */}
           {activePage === "resume" && (
-            <Resume />
+            <Resume
+              profile={profile}
+              setProfile={setProfile}
+            />
           )}
 
           {/* PROFILE */}
@@ -130,7 +150,8 @@ function App() {
             activePage !== "applications" &&
             activePage !== "resume" &&
             activePage !== "profile" && 
-            activePage !== "insights" && (
+            activePage !== "insights" && 
+            activePage !== "job-analysis" && (    
               <div className="page-placeholder">
                 <p className="eyebrow">JobHunter AI</p>
                 <h1>{activePage}</h1>

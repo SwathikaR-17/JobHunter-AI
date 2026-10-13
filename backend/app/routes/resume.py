@@ -1,4 +1,4 @@
-from fastapi import APIRouter, UploadFile, File, Depends
+from fastapi import APIRouter, UploadFile, File, Depends, HTTPException
 from sqlalchemy.orm import Session
 from pypdf import PdfReader
 import io
@@ -41,27 +41,37 @@ async def upload_resume(
     # Gemini parses the resume
     profile = parse_resume(resume_text)
 
-    # Save parsed profile to PostgreSQL
-    new_profile = CandidateProfile(
-        name=profile["name"],
-        email=profile["email"],
-        education=profile["education"],
-        skills=profile["skills"],
-        projects=profile["projects"],
-        experience=profile["experience"],
-        languages=profile["languages"],
-        certifications=profile["certifications"],
-        preferred_roles=profile["preferred_roles"],
-        preferred_locations=profile["preferred_locations"],
-        experience_level=profile["experience_level"]
+    # Find existing profile
+    existing_profile = (
+        db.query(CandidateProfile)
+        .filter(CandidateProfile.id == 1)
+        .first()
     )
 
-    db.add(new_profile)
+    if not existing_profile:
+        raise HTTPException(
+            status_code=404,
+            detail="Candidate profile not found."
+        )
+
+    # Update existing profile
+    existing_profile.name = profile["name"]
+    existing_profile.email = profile["email"]
+    existing_profile.education = profile["education"]
+    existing_profile.skills = profile["skills"]
+    existing_profile.projects = profile["projects"]
+    existing_profile.experience = profile["experience"]
+    existing_profile.languages = profile["languages"]
+    existing_profile.certifications = profile["certifications"]
+    existing_profile.preferred_roles = profile["preferred_roles"]
+    existing_profile.preferred_locations = profile["preferred_locations"]
+    existing_profile.experience_level = profile["experience_level"]
+
     db.commit()
-    db.refresh(new_profile)
+    db.refresh(existing_profile)
 
     return {
-        "message": "Resume parsed and profile saved successfully",
-        "profile_id": new_profile.id,
+        "message": "Resume parsed and profile updated successfully",
+        "profile_id": existing_profile.id,
         "profile": profile
     }
