@@ -147,21 +147,33 @@ def calculate_match(profile, job):
 
         if candidate_experience == "fresher":
 
-            if "2-5" in job_experience:
-                experience_fit = 0
+            if "fresher" in job_experience:
+                experience_fit = 1.0
+
+            elif "intern" in job_experience:
+                experience_fit = 1.0
+
+            elif "0-1" in job_experience:
+                experience_fit = 1.0
+
+            elif "1-2" in job_experience:
+                experience_fit = 0.7
+
+            elif "2-5" in job_experience:
+                experience_fit = 0.2
 
             elif "5-10" in job_experience:
-                experience_fit = 0
+                experience_fit = 0.0
 
             elif "10+" in job_experience:
-                experience_fit = 0
+                experience_fit = 0.0
 
             else:
-                experience_fit = 1
+                experience_fit = 0.5
 
         else:
 
-            experience_fit = 1
+            experience_fit = 1.0
         # --------------------------------
         # 5. CALCULATE SKILL SCORE
         # --------------------------------
@@ -260,7 +272,7 @@ def calculate_match(profile, job):
                 exact_matches
             ),
             
-            "experience_fit": experience_fit,
+            "experience_fit": round(experience_fit * 100, 2),
 
             "skill_scores": skill_scores,
 
