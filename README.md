@@ -163,34 +163,6 @@ flowchart TB
     class DB,ORM data
 ```
 
-### Core Processing Workflows
-
-**1. Resume Processing**
-- Candidates upload their resumes in PDF format.
-- Resume text is extracted using PDF processing utilities.
-- Google's Gemini API converts the extracted information into structured candidate data.
-- The parsed information is validated and stored in the candidate profile.
-
-**2. Intelligent Job Matching**
-- Job information is retrieved from the database.
-- Candidate skills and experience are compared against job requirements.
-- Semantic embeddings help identify relevant skills demonstrated through projects.
-- A weighted scoring mechanism calculates the overall job-match percentage.
-
-**3. Multi-Agent Orchestration**
-
-LangGraph coordinates five specialized agents through a sequential workflow:
-
-| Agent | Responsibility |
-|---|---|
-| Job Discovery | Retrieves available job opportunities |
-| Job Intelligence | Processes and organizes job information |
-| Matching | Evaluates candidate-job compatibility |
-| Skill Gap | Identifies and prioritizes missing skills |
-| Application Prep | Generates resume keywords and interview preparation recommendations |
-
-Each agent contributes to a shared workflow state, enabling information to flow from job discovery through application preparation.
-
 ### Architectural Highlights
 
 - **Modular backend:** Separate routes, services, models and schemas.
